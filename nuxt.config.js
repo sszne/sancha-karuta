@@ -21,7 +21,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     "~/assets/css/common.css",
-    "~/assets/css/custom.css",
+    "~/assets/css/custom.scss",
     "~/assets/css/reset.css"
   ],
 
@@ -38,6 +38,8 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     "@nuxtjs/vuetify"
   ],
+
+  ssr: false,
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
@@ -59,6 +61,10 @@ export default {
         }
       }
     }
+  },
+
+  moment: {
+    locales: ["ja"]
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

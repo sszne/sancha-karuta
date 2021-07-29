@@ -144,6 +144,7 @@
 }
 .action-karuta-box p.text {
   font-size: 46px;
+  text-align: left;
   line-height: 1.5em;
   letter-spacing: 1px;
   -ms-writing-mode: tb-rl;
@@ -153,6 +154,8 @@
   top: 30px;
   right: 170px;
   max-height: 360px;
+  -webkit-font-feature-settings: "pkna";
+  font-feature-settings: "pkna";
 }
 textarea.action-type {
   display: block;
@@ -162,7 +165,8 @@ textarea.action-type {
   -moz-border-radius: 30px;
   border-radius: 30px;
   padding: 30px;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto 50px;
   text-align: center;
   font-size: 24px;
@@ -283,40 +287,6 @@ textarea.action-type:focus {
   .select-kana {
     padding-bottom: 30px;
   }
-  .action-karuta-box {
-    width: 100%;
-    height: 100vw;
-    border: solid 12px #fff000;
-    position: relative;
-    margin: 0 auto 20px;
-  }
-  .action-karuta-box .head {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background-color: #fff000;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #000;
-    font-size: 56px;
-    font-weight: bold;
-    vertical-align: middle;
-    text-align: center;
-    line-height: 86px;
-  }
-  textarea.action-type {
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    padding: 20px;
-    width: 100%;
-    margin: 0 auto 20px;
-  }
-  .submit-btn {
-    font-size: 26px;
-    padding: 18px 20px;
-  }
   .archive {
     width: 100%;
     padding: 30px 20px;
@@ -347,4 +317,42 @@ textarea.action-type:focus {
   }
 }
 @media (max-width: 441px) {
+  .action-karuta-box {
+    width: 100%;
+    height: 100vw;
+    border: solid 12px #fff000;
+    position: relative;
+    margin: 0 auto 20px;
+  }
+  .action-karuta-box .head {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #fff000;
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    color: #000;
+    font-size: 52px;
+    font-weight: 700;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 76px;
+  }
+  .action-karuta-box p.text {
+    top: 32px;
+    right: 106px;
+    font-size: 40px;
+  }
+  textarea.action-type {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0 auto 20px;
+  }
+  .submit-btn {
+    font-size: 26px;
+    padding: 18px 20px;
+  }
 }

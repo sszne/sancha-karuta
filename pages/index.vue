@@ -15,35 +15,37 @@
           <button class="submit-btn" @click="inputFlg = true">入力する</button>
         </div>
       </div>
-      <div v-if="inputFlg" class="action">
-        <div class="select-kana center-flex">
-          <div
-            :class="['karuta-box', item === selectKana && 'active']"
-            v-for="item in kanaList"
-            :key="item"
-            @click="changeSelectKana(item)"
-          >
-            <span class="head">{{ item }}</span>
+      <transition name="fade">
+        <div v-if="inputFlg" class="action">
+          <div class="select-kana center-flex">
+            <div
+              :class="['karuta-box', item === selectKana && 'active']"
+              v-for="item in kanaList"
+              :key="item"
+              @click="changeSelectKana(item)"
+            >
+              <span class="head">{{ item }}</span>
+            </div>
           </div>
+          <div class="action-karuta-box">
+            <span class="head">{{ selectKana }}</span>
+            <p class="text">{{ inputText }}</p>
+          </div>
+          <textarea
+            class="action-type"
+            maxlength="21"
+            v-model="inputText"
+            placeholder="もう一杯と気づけばいつも朝だよね"
+          />
+          <button
+            class="submit-btn"
+            :disabled="inputText === '' && true"
+            @click="submitMessage(inputText)"
+          >
+            送信する
+          </button>
         </div>
-        <div class="action-karuta-box">
-          <span class="head">{{ selectKana }}</span>
-          <p class="text">{{ inputText }}</p>
-        </div>
-        <textarea
-          class="action-type"
-          maxlength="21"
-          v-model="inputText"
-          placeholder="もう一杯と気づけばいつも朝だよね"
-        />
-        <button
-          class="submit-btn"
-          :disabled="inputText === '' && true"
-          @click="submitMessage(inputText)"
-        >
-          送信する
-        </button>
-      </div>
+      </transition>
       <div class="archive area-flex">
         <div class="karuta-box" v-for="item in weekKarutaList" :key="item">
           <span class="head">{{ item.kana }}</span>
@@ -74,7 +76,9 @@ export default {
       kanaList: (await context.app.$kana.getKanaList()) || [],
       selectKana: "",
       inputText: "",
-      inputFlg: false
+      inputFlg: false,
+      inputValidateFlg: false,
+      inputValidateText: ""
     };
   },
   methods: {
@@ -84,6 +88,9 @@ export default {
     async submitMessage(inputText) {
       if (inputText.slice(0, 1) !== this.selectKana) {
         alert("先頭文字は選択したカルタと同じにする必要があります");
+        // this.inputValidateText =
+        //   "先頭文字は選択したカルタと同じにする必要があります";
+        // this.inputValidateFlg = true;
         return;
       }
       const setData = {
@@ -109,6 +116,18 @@ export default {
     this.selectKana = this.kanaList[0];
     this.getWeekKarutaList(this.karutaList);
     this.getArchiveKarutaList(this.karutaList);
-  }
+  },
+  transition: "fade"
 };
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.2s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+</style>
