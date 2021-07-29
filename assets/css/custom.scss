@@ -126,6 +126,7 @@
   border: solid 12px #fff000;
   position: relative;
   margin: 0 auto 40px;
+  border-radius: 0px !important;
 }
 .action-karuta-box .head {
   width: 130px;
@@ -240,6 +241,31 @@ textarea.action-type:focus {
 .past {
   text-align: center;
   padding: 100px 0;
+}
+.dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(140, 140, 20, 0.2);
+  z-index: 9999;
+}
+.dialog-card {
+  max-width: 700px !important;
+  width: 80%;
+  padding: 30px;
+  border-radius: 20px !important;
+}
+.dialog-text {
+  padding: 38px 0 !important;
+  font-size: 23px !important;
+  text-align: center;
+  font-weight: bold !important;
+  letter-spacing: 3px !important;
+  line-height: 1.4 !important;
 }
 
 @media only screen and (max-width: 834px) {

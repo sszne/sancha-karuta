@@ -62,6 +62,32 @@
         </div>
       </div>
     </div>
+    <v-btn @click.stop="inputValidateFlg = true" />
+    <transition name="fade-fast">
+      <div
+        class="dialog"
+        v-if="inputValidateFlg"
+        @click="inputValidateFlg = false"
+      >
+        <v-card class="dialog-card">
+          <div v-if="postCompleteFlg" class="action-karuta-box">
+            <span class="head">{{ selectKana }}</span>
+            <p class="text">{{ inputText }}</p>
+          </div>
+          <v-card-text class="dialog-text center-flex">{{
+            inputValidateText
+          }}</v-card-text>
+          <v-card-actions class="center-flex">
+            <button
+              class="submit-btn"
+              @click="(inputValidateFlg = false), postCompleteFlg && reload()"
+            >
+              わかったよ
+            </button>
+          </v-card-actions>
+        </v-card>
+      </div>
+    </transition>
     <footer></footer>
   </div>
 </template>
@@ -78,7 +104,8 @@ export default {
       inputText: "",
       inputFlg: false,
       inputValidateFlg: false,
-      inputValidateText: ""
+      inputValidateText: "",
+      postCompleteFlg: false
     };
   },
   methods: {
@@ -87,10 +114,8 @@ export default {
     },
     async submitMessage(inputText) {
       if (inputText.slice(0, 1) !== this.selectKana) {
-        alert("先頭文字は選択したカルタと同じにする必要があります");
-        // this.inputValidateText =
-        //   "先頭文字は選択したカルタと同じにする必要があります";
-        // this.inputValidateFlg = true;
+        this.inputValidateText = "はじめの文字はカルタと同じにしてね。";
+        this.inputValidateFlg = true;
         return;
       }
       const setData = {
@@ -99,7 +124,9 @@ export default {
         body: inputText
       };
       await this.$request.set("karuta", setData);
-      location.reload();
+      this.postCompleteFlg = true;
+      this.inputValidateText = "このかるたが投稿されたよ。";
+      this.inputValidateFlg = true;
     },
     getWeekKarutaList(karutaList) {
       this.weekKarutaList = karutaList.filter(karuta =>
@@ -110,6 +137,9 @@ export default {
       this.archiveKarutaList = karutaList.filter(
         karuta => !this.kanaList.includes(karuta.kana)
       );
+    },
+    reload() {
+      location.reload();
     }
   },
   mounted() {
@@ -126,8 +156,14 @@ export default {
 .fade-leave-active {
   transition: opacity 1.2s;
 }
+.fade-fast-enter-active,
+.fade-fast-leave-active {
+  transition: opacity 0.3s;
+}
 .fade-enter,
-.fade-leave-active {
+.fade-fast-enter,
+.fade-leave-active,
+.fade-fast-leave-active {
   opacity: 0;
 }
 </style>
