@@ -12,6 +12,12 @@
       <!-- <h1><img src="@/assets/images/main-image.png" alt="三茶カルタ" /></h1> -->
     </div>
     <div id="contents">
+      <div class="discription">
+        <p>
+          三茶WORK2周年記念企画！三茶の日常をカルタにしよう！
+        </p>
+        <p>あまりにも面白くなったら本当のカルタになる！かも！</p>
+      </div>
       <div class="week">
         <h2>今週のお題</h2>
         <div class="week-main">
@@ -133,7 +139,7 @@ export default {
       };
       await this.$request.set("karuta", setData);
       this.postCompleteFlg = true;
-      this.inputValidateText = "このかるたが投稿されたよ。";
+      this.inputValidateText = "このカルタが投稿されたよ。";
       this.inputValidateFlg = true;
     },
     getWeekKarutaList(karutaList) {
