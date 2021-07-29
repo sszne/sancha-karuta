@@ -1,100 +1,101 @@
 * {
-	font-family: 'Noto Sans JP',-apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Helvetica Neue", HelveticaNeue, YuGothic, "Yu Gothic Medium", "Yu Gothic", Verdana, Meiryo, sans-serif;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	-o-box-sizing: border-box;
+  font-family: "Hannari", "Noto Serif JP", -apple-system, BlinkMacSystemFont,
+    Roboto, "Segoe UI", "Helvetica Neue", HelveticaNeue, YuGothic,
+    "Yu Gothic Medium", "Yu Gothic", Verdana, Meiryo, serif;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
 }
-body{
-	word-wrap: break-word;
+body {
+  word-wrap: break-word;
 }
-p{
-	line-height: 1.4em;
+p {
+  line-height: 1.4em;
 }
-img{
-	vertical-align: bottom;
+img {
+  vertical-align: bottom;
 }
 img[src$=".svg"] {
-	height: auto;
+  height: auto;
 }
-a{
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	-ms-transition: all 0.3s;
-	-o-transition: all 0.3s;
-	transition: all 0.3s;
+a {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
 }
 .pc {
-	display: block;
+  display: block;
 }
 .sp {
-	display:none;
+  display: none;
 }
-@media only screen and  (max-width: 834px) {
-.pc {
-	display:none;
-}
-.sp {
-	display:block;
-}
-.img-responsive {
+@media only screen and (max-width: 834px) {
+  .pc {
+    display: none;
+  }
+  .sp {
+    display: block;
+  }
+  .img-responsive {
     width: 100%;
-}
+  }
 }
 .clearfix:after {
-	display: block;
-	clear: both;
-	content: '';
+  display: block;
+  clear: both;
+  content: "";
 }
-.area-flex{
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
+.area-flex {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
-.area-center-flex{
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	align-items: center;
+.area-center-flex {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  align-items: center;
 }
-.just-flex{
-	display: -webkit-flex;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap:wrap;
-	justify-content: space-between;
+.just-flex {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.center-flex{
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-wrap: wrap;
-	flex-wrap: wrap;
-	justify-content: center;
+.center-flex {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-#container{
-	padding: 0px 0 0 0;
+#container {
+  padding: 0px 0 0 0;
 }
 #contents {
-	width: 100%;
-	max-width: 1600px;
-	min-width: 1200px;
-	margin: 0 auto;
-	padding: 50px 0;
+  width: 100%;
+  max-width: 1600px;
+  min-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 0;
 }
-@media only screen and  (max-width: 834px) {
-	#container{
-		padding: 0px 0 0 0;
-	}
-	#contents {
-		width: 100%;
-		max-width: 100%;
-		min-width: 100%;
-		padding: 0px 0 50px;
-	}
-	
+@media only screen and (max-width: 834px) {
+  #container {
+    padding: 0px 0 0 0;
+  }
+  #contents {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 0px 0 50px;
+  }
 }
-@media (max-width: 441px) { 
+@media (max-width: 441px) {
 }

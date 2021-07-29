@@ -7,7 +7,7 @@ export default {
     titleTemplate: "%s - 3cha-karuta",
     title: "3cha-karuta",
     htmlAttrs: {
-      lang: "en"
+      lang: "ja"
     },
     meta: [
       { charset: "utf-8" },
@@ -21,7 +21,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     "~/assets/css/common.css",
-    "~/assets/css/custom.scss",
+    "~/assets/css/custom.css",
     "~/assets/css/reset.css"
   ],
 
@@ -42,7 +42,12 @@ export default {
   ssr: false,
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [["nuxt-webfontloader"]],
+  webfontloader: {
+    google: {
+      families: ["Noto+Serif+JP:wght@100;300;400;500;700;900"]
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

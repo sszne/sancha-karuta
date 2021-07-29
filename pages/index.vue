@@ -1,7 +1,15 @@
 <template>
   <div id="container">
+    <link
+      href="https://fonts.googleapis.com/earlyaccess/hannari.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho"
+      rel="stylesheet"
+    />
     <div id="main">
-      <h1><img src="images/logo.svg" alt="三茶カルタ" /></h1>
+      <!-- <h1><img src="@/assets/images/main-image.png" alt="三茶カルタ" /></h1> -->
     </div>
     <div id="contents">
       <div class="week">

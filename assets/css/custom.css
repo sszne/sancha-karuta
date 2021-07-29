@@ -1,32 +1,13 @@
 #main {
-  background-color: #fff000;
   text-align: center;
-  padding: 110px 20px 70px;
-  min-width: 1200px;
+  width: 100%;
+  height: 440px;
+  background: url("@/assets/images/main-image.png") no-repeat top center;
+  background-size: contain;
 }
 #contents h2 {
   font-size: 44px;
-  background-image: -moz-linear-gradient(
-    90deg,
-    rgb(260, 260, 260) 0%,
-    rgb(260, 260, 260) 35%,
-    rgb(260, 240, 0) 35%,
-    rgb(260, 240, 0) 50%,
-    rgb(260, 240, 0) 52%,
-    rgb(260, 260, 260) 52%,
-    rgb(260, 260, 260) 100%
-  );
   background-image: -webkit-linear-gradient(
-    90deg,
-    rgb(260, 260, 260) 0%,
-    rgb(260, 260, 260) 35%,
-    rgb(260, 240, 0) 35%,
-    rgb(260, 240, 0) 50%,
-    rgb(260, 240, 0) 52%,
-    rgb(260, 260, 260) 52%,
-    rgb(260, 260, 260) 100%
-  );
-  background-image: -ms-linear-gradient(
     90deg,
     rgb(260, 260, 260) 0%,
     rgb(260, 260, 260) 35%,
@@ -43,7 +24,7 @@
 }
 .week {
   text-align: center;
-  padding: 80px 0 30px;
+  padding: 20px 0 30px;
 }
 .week-main {
   padding: 0 0 60px;
@@ -58,10 +39,11 @@
   background-color: #fff000;
   color: #000;
   font-size: 100px;
-  font-weight: bold;
+  font-weight: 500;
   display: inline-block;
   text-align: center;
-  line-height: 144px;
+  letter-spacing: -10px;
+  line-height: 140px;
   transition: 0.3s all;
 }
 .week-main .headline {
@@ -270,12 +252,8 @@ textarea.action-type:focus {
 
 @media only screen and (max-width: 834px) {
   #main {
-    padding: 70px 20px 70px;
-    min-width: 100%;
-  }
-  #main img {
-    width: 300px;
-    margin: 0 auto;
+    height: 400px;
+    background-size: 150%;
   }
   #contents h2 {
     font-size: 34px;
@@ -343,6 +321,10 @@ textarea.action-type:focus {
   }
 }
 @media (max-width: 441px) {
+  #main {
+    height: 270px;
+    background-size: 200%;
+  }
   .action-karuta-box {
     width: 100%;
     height: 100vw;
