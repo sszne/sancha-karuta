@@ -104,6 +104,7 @@
   font-weight: bold;
   vertical-align: middle;
   text-align: center;
+  letter-spacing: -5px;
   line-height: 48px;
   transition: 0.3s all;
 }
@@ -138,6 +139,7 @@
   font-weight: bold;
   vertical-align: middle;
   text-align: center;
+  letter-spacing: -5px;
   line-height: 126px;
 }
 .action-karuta-box p.text {
@@ -150,12 +152,24 @@
   font-weight: bold;
   position: absolute;
   top: 30px;
-  right: 170px;
+  right: 155px;
   max-height: 360px;
   -webkit-font-feature-settings: "pkna";
   font-feature-settings: "pkna";
 }
-textarea.action-type {
+.action-karuta-box p.user-name {
+  position: absolute;
+  writing-mode: vertical-rl;
+  bottom: 20px;
+  left: 14px;
+  font-size: 25px;
+  font-weight: 700;
+}
+.action h3 {
+  padding-bottom: 10px;
+  font-size: 26px;
+}
+.action-type {
   display: block;
   resize: none;
   background-color: #cccccc;
@@ -165,7 +179,7 @@ textarea.action-type {
   padding: 30px;
   width: 100%;
   max-width: 800px;
-  margin: 0 auto 50px;
+  margin: 0 auto 20px;
   text-align: center;
   font-size: 24px;
   font-weight: bold;
@@ -175,7 +189,11 @@ textarea.action-type {
   opacity: 0.6;
   transition: 0.3s all;
 }
-textarea.action-type:focus {
+.action-type.nickname {
+  padding: 20px 30px;
+  width: 400px;
+}
+.action-type:focus {
   outline: none;
   opacity: 1;
 }
@@ -189,6 +207,7 @@ textarea.action-type:focus {
   letter-spacing: 4px;
   color: #000;
   text-align: center;
+  margin-top: 30px;
   padding: 20px 100px;
   display: inline-block;
   cursor: pointer;
@@ -233,7 +252,15 @@ textarea.action-type:focus {
   font-weight: bold;
   position: absolute;
   top: 30px;
-  right: 100px;
+  right: 94px;
+}
+.archive .karuta-box .user-name {
+  position: absolute;
+  writing-mode: vertical-rl;
+  bottom: 14px;
+  left: 7px;
+  font-size: 18px;
+  font-weight: 700;
 }
 .past {
   text-align: center;
@@ -367,7 +394,15 @@ textarea.action-type:focus {
     right: 106px;
     font-size: 40px;
   }
-  textarea.action-type {
+  .action-karuta-box p.user-name {
+    position: absolute;
+    writing-mode: vertical-rl;
+    bottom: 14px;
+    left: 7px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .action-type {
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px;

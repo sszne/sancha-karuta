@@ -32,18 +32,19 @@
       <transition name="fade">
         <div v-if="inputFlg" class="action">
           <div class="select-kana center-flex">
-            <div
+            <button
               :class="['karuta-box', item === selectKana && 'active']"
               v-for="item in kanaList"
               :key="item"
               @click="changeSelectKana(item)"
             >
               <span class="head">{{ item }}</span>
-            </div>
+            </button>
           </div>
           <div class="action-karuta-box">
             <span class="head">{{ selectKana }}</span>
             <p class="text">{{ inputText }}</p>
+            <p class="user-name">{{ inputUserName }}</p>
           </div>
           <textarea
             class="action-type"
@@ -51,10 +52,18 @@
             v-model="inputText"
             placeholder="もう一杯と気づけばいつも朝だよね"
           />
+          <h3>ニックネーム</h3>
+          <input
+            class="action-type nickname"
+            type="text"
+            maxlength="6"
+            v-model="inputUserName"
+            placeholder="三茶かるたん"
+          />
           <button
             class="submit-btn"
             :disabled="inputText === '' && true"
-            @click="submitMessage(inputText)"
+            @click="submitMessage(inputText, inputUserName)"
           >
             送信する
           </button>
@@ -64,6 +73,7 @@
         <div class="karuta-box" v-for="item in weekKarutaList" :key="item">
           <span class="head">{{ item.kana }}</span>
           <p class="text">{{ item.body }}</p>
+          <p class="user-name">{{ item.userName }}</p>
         </div>
       </div>
       <div class="past">
@@ -72,6 +82,7 @@
           <div class="karuta-box" v-for="item in archiveKarutaList" :key="item">
             <span class="head">{{ item.kana }}</span>
             <p class="text">{{ item.body }}</p>
+            <p class="user-name">{{ item.userName }}</p>
           </div>
         </div>
       </div>
@@ -110,12 +121,14 @@
 export default {
   async asyncData(context) {
     return {
-      karutaList: (await context.app.$request.get("karuta")) || [],
+      karutaList:
+        (await context.app.$request.get("karuta", "desc", "createdAt")) || [],
       weekKarutaList: [],
       archiveKarutaList: [],
       kanaList: (await context.app.$kana.getKanaList()) || [],
       selectKana: "",
       inputText: "",
+      inputUserName: "",
       inputFlg: false,
       inputValidateFlg: false,
       inputValidateText: "",
@@ -126,7 +139,7 @@ export default {
     changeSelectKana(value) {
       this.selectKana = value;
     },
-    async submitMessage(inputText) {
+    async submitMessage(inputText, inputUserName) {
       if (inputText.slice(0, 1) !== this.selectKana) {
         this.inputValidateText = "はじめの文字はカルタと同じにしてね。";
         this.inputValidateFlg = true;
@@ -135,7 +148,9 @@ export default {
       const setData = {
         id: "",
         kana: this.selectKana,
-        body: inputText
+        body: inputText,
+        userName: inputUserName,
+        createdAt: ""
       };
       await this.$request.set("karuta", setData);
       this.postCompleteFlg = true;
