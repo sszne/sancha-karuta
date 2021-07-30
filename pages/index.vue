@@ -30,7 +30,7 @@
         </div>
       </div>
       <transition name="fade">
-        <div v-if="inputFlg" class="action">
+        <div v-show="inputFlg" class="action">
           <div class="select-kana center-flex">
             <button
               :class="['karuta-box', item === selectKana && 'active']"
@@ -41,7 +41,7 @@
               <span class="head">{{ item }}</span>
             </button>
           </div>
-          <div class="action-karuta-box">
+          <div class="action-karuta-box" id="post-karuta">
             <span class="head">{{ selectKana }}</span>
             <p class="text">{{ inputText }}</p>
             <p class="user-name">{{ inputUserName }}</p>
@@ -60,6 +60,7 @@
             v-model="inputUserName"
             placeholder="三茶かるたん"
           />
+          <button 　class="submit-btn" @click="shareKaruta()">テスト</button>
           <button
             class="submit-btn"
             :disabled="inputText === '' && true"
@@ -98,10 +99,18 @@
           <div v-if="postCompleteFlg" class="action-karuta-box">
             <span class="head">{{ selectKana }}</span>
             <p class="text">{{ inputText }}</p>
+            <p class="user-name">{{ inputUserName }}</p>
           </div>
           <v-card-text class="dialog-text center-flex">{{
             inputValidateText
           }}</v-card-text>
+          <a
+            class="submit-btn center-flex"
+            :href="facebookURL"
+            target="_blank"
+            rel="nofollow"
+            >シェアする</a
+          >
           <v-card-actions class="center-flex">
             <button
               class="submit-btn"
@@ -119,6 +128,19 @@
 
 <script>
 export default {
+  head() {
+    return {
+      meta: [
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: `${this.inputUserName} の三茶カルタ`
+        },
+        { hid: "og:url", property: "og:url", content: "" },
+        { hid: "og:image", property: "og:image", content: this.ogpImageURL }
+      ]
+    };
+  },
   async asyncData(context) {
     return {
       karutaList:
@@ -132,7 +154,8 @@ export default {
       inputFlg: false,
       inputValidateFlg: false,
       inputValidateText: "",
-      postCompleteFlg: false
+      postCompleteFlg: false,
+      ogpImageURL: ""
     };
   },
   methods: {
@@ -167,8 +190,21 @@ export default {
         karuta => !this.kanaList.includes(karuta.kana)
       );
     },
+    async shareKaruta() {
+      const postSelector = document.querySelector("#post-karuta");
+      const url = await this.$request.uploadImage(postSelector);
+      this.ogpImageURL = url;
+    },
     reload() {
       location.reload();
+    }
+  },
+  computed: {
+    url() {
+      return `https://cha-karuta.web.app`;
+    },
+    facebookURL() {
+      return `https://www.facebook.com/sharer/sharer.php?u=${this.url}&t=test`;
     }
   },
   mounted() {

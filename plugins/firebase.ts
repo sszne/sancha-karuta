@@ -1,13 +1,19 @@
 import firebase from "firebase/app";
 import "@firebase/firestore";
+import "@firebase/storage";
 import { WhereFilterOp, OrderByDirection } from "@firebase/firestore-types";
+import html2canvas from "html2canvas";
 
-const get = async (doc: string) => {
+const get = async (
+  doc: string,
+  orderby: OrderByDirection | undefined,
+  orderbyField: string
+) => {
   try {
-    const snapShot = await firebase
-      .firestore()
-      .collection(doc)
-      .get();
+    const collectionRef = await firebase.firestore().collection(doc);
+    const snapShot = orderby
+      ? await collectionRef.orderBy(orderbyField, orderby).get()
+      : await collectionRef.get();
     const result = snapShot.docs.map(doc =>
       doc.data({ serverTimestamps: "estimate" })
     );
@@ -49,8 +55,37 @@ const set = async (doc: string, setData: any) => {
       .collection("karuta")
       .doc();
     setData.id = collectionRef.id;
+    setData.createdAt = firebase.firestore.Timestamp.now();
     const res = await collectionRef.set(setData);
     return collectionRef;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const uploadImage = async (selector: any) => {
+  try {
+    window.scrollTo(0, 0);
+    console.log("selector", selector);
+    const canvas = await html2canvas(selector, {
+      allowTaint: false,
+      useCORS: true,
+      imageTimeout: 0,
+      scale: 1
+    });
+    const img = canvas.toDataURL();
+    const date = new Date();
+    const storageRef = firebase.storage().ref();
+    console.log("storageRef", storageRef);
+    // ファイルのパスを設定
+    const imagePathRef = storageRef.child(`images/${date}`);
+    console.log("imagePathRef", imagePathRef);
+    // ファイルを適用してファイルアップロード開始
+    const uploadImageSnapshot = await imagePathRef.putString(img, "data_url");
+    console.log("uploadImageSnapshot", uploadImageSnapshot);
+    const url = uploadImageSnapshot.ref.getDownloadURL();
+    console.log("url", url);
+    return url;
   } catch (err) {
     console.log(err);
   }
@@ -67,12 +102,12 @@ export default function injectFirebase(context: any, inject: any) {
   };
 
   if (!firebase.apps.length) {
-    console.log(firebaseConfig);
     firebase.initializeApp(firebaseConfig);
   }
   inject("request", {
     get,
     where,
-    set
+    set,
+    uploadImage
   });
 }
