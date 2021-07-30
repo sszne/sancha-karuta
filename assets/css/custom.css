@@ -1,9 +1,10 @@
-#main {
-  text-align: center;
-  width: 100%;
-  height: 440px;
-  background: url("@/assets/images/main-image.png") no-repeat top center;
-  background-size: contain;
+#main h1 {
+  display: flex;
+  justify-content: center;
+}
+#main img {
+  max-width: 1540px;
+  width: 120%;
 }
 #contents h2 {
   font-size: 44px;
@@ -293,9 +294,13 @@
 }
 
 @media only screen and (max-width: 834px) {
-  #main {
-    height: 400px;
-    background-size: 150%;
+  #main img {
+    min-width: 840px;
+    width: 120%;
+  }
+  .discription p {
+    font-size: 22px;
+    padding-bottom: 16px;
   }
   #contents h2 {
     font-size: 34px;

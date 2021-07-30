@@ -9,13 +9,11 @@
       rel="stylesheet"
     />
     <div id="main">
-      <!-- <h1><img src="@/assets/images/main-image.png" alt="三茶カルタ" /></h1> -->
+      <h1><img src="@/assets/images/main-image.png" alt="三茶カルタ" /></h1>
     </div>
     <div id="contents">
       <div class="discription">
-        <p>
-          三茶WORK2周年記念企画！三茶の日常をカルタにしよう！
-        </p>
+        <p>三茶WORK2周年記念企画！三茶の日常をカルタにしよう！</p>
         <p>あまりにも面白くなったら本当のカルタになる！かも！</p>
       </div>
       <div class="week">
@@ -173,6 +171,7 @@ export default {
         kana: this.selectKana,
         body: inputText,
         userName: inputUserName,
+        ogpImageURL: this.ogpImageURL,
         createdAt: ""
       };
       await this.$request.set("karuta", setData);
