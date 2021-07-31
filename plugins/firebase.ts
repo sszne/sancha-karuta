@@ -53,8 +53,7 @@ const set = async (doc: string, setData: any) => {
     const collectionRef = firebase
       .firestore()
       .collection("karuta")
-      .doc();
-    setData.id = collectionRef.id;
+      .doc(doc);
     setData.createdAt = firebase.firestore.Timestamp.now();
     const res = await collectionRef.set(setData);
     return collectionRef;
@@ -63,10 +62,9 @@ const set = async (doc: string, setData: any) => {
   }
 };
 
-const uploadImage = async (selector: any) => {
+const uploadImage = async (selector: any, postId: string) => {
   try {
     window.scrollTo(0, 0);
-    console.log("selector", selector);
     const canvas = await html2canvas(selector, {
       allowTaint: false,
       useCORS: true,
@@ -74,15 +72,9 @@ const uploadImage = async (selector: any) => {
       scale: 1
     });
     const img = canvas.toDataURL();
-    const date = new Date();
     const storageRef = firebase.storage().ref();
-    console.log("storageRef", storageRef);
-    // ファイルのパスを設定
-    const imagePathRef = storageRef.child(`images/${date}`);
-    console.log("imagePathRef", imagePathRef);
-    // ファイルを適用してファイルアップロード開始
+    const imagePathRef = storageRef.child(`images/${postId}`);
     const uploadImageSnapshot = await imagePathRef.putString(img, "data_url");
-    console.log("uploadImageSnapshot", uploadImageSnapshot);
     const url = uploadImageSnapshot.ref.getDownloadURL();
     console.log("url", url);
     return url;

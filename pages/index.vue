@@ -58,7 +58,7 @@
             v-model="inputUserName"
             placeholder="三茶かるたん"
           />
-          <button 　class="submit-btn" @click="shareKaruta()">テスト</button>
+          <!-- <button 　class="submit-btn" @click="shareKaruta()">テスト</button> -->
           <button
             class="submit-btn"
             :disabled="inputText === '' && true"
@@ -86,7 +86,6 @@
         </div>
       </div>
     </div>
-    <v-btn @click.stop="inputValidateFlg = true" />
     <transition name="fade-fast">
       <div
         class="dialog"
@@ -102,13 +101,13 @@
           <v-card-text class="dialog-text center-flex">{{
             inputValidateText
           }}</v-card-text>
-          <a
+          <!-- <a
             class="submit-btn center-flex"
             :href="facebookURL"
             target="_blank"
             rel="nofollow"
             >シェアする</a
-          >
+          > -->
           <v-card-actions class="center-flex">
             <button
               class="submit-btn"
@@ -126,19 +125,19 @@
 
 <script>
 export default {
-  head() {
-    return {
-      meta: [
-        {
-          hid: "og:description",
-          property: "og:description",
-          content: `${this.inputUserName} の三茶カルタ`
-        },
-        { hid: "og:url", property: "og:url", content: "" },
-        { hid: "og:image", property: "og:image", content: this.ogpImageURL }
-      ]
-    };
-  },
+  // head() {
+  //   return {
+  //     meta: [
+  //       {
+  //         hid: "og:description",
+  //         property: "og:description",
+  //         content: `${this.inputUserName} の三茶カルタ`
+  //       },
+  //       { hid: "og:url", property: "og:url", content: "" },
+  //       { hid: "og:image", property: "og:image", content: this.ogpImageURL }
+  //     ]
+  //   };
+  // },
   async asyncData(context) {
     return {
       karutaList:
@@ -153,31 +152,13 @@ export default {
       inputValidateFlg: false,
       inputValidateText: "",
       postCompleteFlg: false,
+      postId: "",
       ogpImageURL: ""
     };
   },
   methods: {
     changeSelectKana(value) {
       this.selectKana = value;
-    },
-    async submitMessage(inputText, inputUserName) {
-      if (inputText.slice(0, 1) !== this.selectKana) {
-        this.inputValidateText = "はじめの文字はカルタと同じにしてね。";
-        this.inputValidateFlg = true;
-        return;
-      }
-      const setData = {
-        id: "",
-        kana: this.selectKana,
-        body: inputText,
-        userName: inputUserName,
-        ogpImageURL: this.ogpImageURL,
-        createdAt: ""
-      };
-      await this.$request.set("karuta", setData);
-      this.postCompleteFlg = true;
-      this.inputValidateText = "このカルタが投稿されたよ。";
-      this.inputValidateFlg = true;
     },
     getWeekKarutaList(karutaList) {
       this.weekKarutaList = karutaList.filter(karuta =>
@@ -189,10 +170,29 @@ export default {
         karuta => !this.kanaList.includes(karuta.kana)
       );
     },
-    async shareKaruta() {
-      const postSelector = document.querySelector("#post-karuta");
-      const url = await this.$request.uploadImage(postSelector);
+    async submitMessage(inputText, inputUserName) {
+      if (!this.$kana.checkFirstKana(inputText.slice(0, 1), this.selectKana)) {
+        this.inputValidateText = "はじめの文字はカルタと同じにしてね。";
+        this.inputValidateFlg = true;
+        return;
+      }
+      this.karutaList = await this.$request.get("karuta", "desc", "createdAt");
+      this.postId = `karuta_${this.karutaList.length + 1}`;
+      // const postSelector = document.querySelector("#post-karuta");
+      // const url = await this.$request.uploadImage(postSelector, this.postId);
       this.ogpImageURL = url;
+      const setData = {
+        id: this.postId,
+        kana: this.selectKana,
+        body: inputText,
+        userName: inputUserName,
+        ogpImageURL: this.ogpImageURL,
+        createdAt: ""
+      };
+      await this.$request.set(this.postId, setData);
+      this.postCompleteFlg = true;
+      this.inputValidateText = "このカルタが投稿されたよ。";
+      this.inputValidateFlg = true;
     },
     reload() {
       location.reload();
@@ -208,6 +208,7 @@ export default {
   },
   mounted() {
     this.selectKana = this.kanaList[0];
+    this.postId = `karuta_${this.karutaList.length + 1}`;
     this.getWeekKarutaList(this.karutaList);
     this.getArchiveKarutaList(this.karutaList);
   },

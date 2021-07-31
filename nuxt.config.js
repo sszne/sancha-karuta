@@ -12,7 +12,13 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      { hid: 'description', name: 'description', content: '三茶WORK2周年記念企画！三茶の日常をカルタにしよう！あまりにも面白くなったら本当のカルタになる！かも！' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'さんちゃかるた' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://3chawork.tokyo/sancha-karuta/' },
+      { hid: 'og:title', property: 'og:title', content: 'さんちゃかるた' },
+      { hid: 'og:description', property: 'og:description', content: '三茶WORK2周年記念企画！三茶の日常をカルタにしよう！あまりにも面白くなったら本当のカルタになる！かも！' },
+      { hid: 'og:image', property: 'og:image', content: '/ogp-main.png' },
       { name: "format-detection", content: "telephone=no" }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
@@ -71,9 +77,13 @@ export default {
   moment: {
     locales: ["ja"]
   },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  router: {
+    base: '/sancha-karuta/',
+    trailingSlash: true,
+  },
+  build: {
+    publicPath: '/'
+  },
   publicRuntimeConfig: {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,

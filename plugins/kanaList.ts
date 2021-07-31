@@ -72,6 +72,65 @@ const getKanaList = () => {
   return result[0].kana;
 };
 
+const checkFirstKana = (inputFirstText: string, selectKana: string) => {
+  const allowKanaList = [
+    { kana: "あ", allowKana: ["あ", "ア"] },
+    { kana: "い", allowKana: ["い", "イ"] },
+    { kana: "う", allowKana: ["う", "ウ"] },
+    { kana: "え", allowKana: ["え", "エ"] },
+    { kana: "お", allowKana: ["お", "オ"] },
+    { kana: "か", allowKana: ["か", "カ"] },
+    { kana: "き", allowKana: ["き", "キ"] },
+    { kana: "く", allowKana: ["く", "ク"] },
+    { kana: "け", allowKana: ["け", "ケ"] },
+    { kana: "こ", allowKana: ["こ", "コ"] },
+    { kana: "さ", allowKana: ["さ", "サ"] },
+    { kana: "し", allowKana: ["し", "シ"] },
+    { kana: "す", allowKana: ["す", "ス"] },
+    { kana: "せ", allowKana: ["せ", "セ"] },
+    { kana: "そ", allowKana: ["そ", "ソ"] },
+    { kana: "た", allowKana: ["た", "タ"] },
+    { kana: "ち", allowKana: ["ち", "チ"] },
+    { kana: "つ", allowKana: ["つ", "ツ"] },
+    { kana: "て", allowKana: ["て", "テ"] },
+    { kana: "と", allowKana: ["と", "ト"] },
+    { kana: "な", allowKana: ["な", "ナ"] },
+    { kana: "に", allowKana: ["に", "ニ"] },
+    { kana: "ぬ", allowKana: ["ぬ", "ヌ"] },
+    { kana: "ね", allowKana: ["ね", "ネ"] },
+    { kana: "の", allowKana: ["の", "ノ"] },
+    { kana: "は", allowKana: ["は", "ハ"] },
+    { kana: "ひ", allowKana: ["ひ", "ヒ"] },
+    { kana: "ふ", allowKana: ["ふ", "フ"] },
+    { kana: "へ", allowKana: ["へ", "ヘ"] },
+    { kana: "ほ", allowKana: ["ほ", "ホ"] },
+    { kana: "ま", allowKana: ["ま", "マ"] },
+    { kana: "み", allowKana: ["み", "ミ"] },
+    { kana: "む", allowKana: ["む", "ム"] },
+    { kana: "め", allowKana: ["め", "メ"] },
+    { kana: "も", allowKana: ["も", "モ"] },
+    { kana: "や", allowKana: ["や", "ヤ"] },
+    { kana: "ゆ", allowKana: ["ゆ", "ユ"] },
+    { kana: "よ", allowKana: ["よ", "ヨ"] },
+    { kana: "ら", allowKana: ["ら", "ラ"] },
+    { kana: "り", allowKana: ["り", "リ"] },
+    { kana: "る", allowKana: ["る", "ル"] },
+    { kana: "れ", allowKana: ["れ", "レ"] },
+    { kana: "ろ", allowKana: ["ろ", "ロ"] },
+    { kana: "わ", allowKana: ["わ", "ワ"] },
+    { kana: "を", allowKana: ["を", "ヲ"] },
+    { kana: "ん", allowKana: ["ん", "ン"] }
+  ];
+  let result = false;
+  allowKanaList.map((e: any) => {
+    if (e.kana === selectKana && e.allowKana.includes(inputFirstText)) {
+      result = true;
+    }
+  });
+  console.log(result);
+  return result;
+};
+
 export default (context: any, inject: any) => {
-  inject("kana", { getKanaList });
+  inject("kana", { getKanaList, checkFirstKana });
 };
