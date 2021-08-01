@@ -101,14 +101,13 @@
           <v-card-text class="dialog-text center-flex">{{
             inputValidateText
           }}</v-card-text>
-          <!-- <a
-            class="submit-btn center-flex"
-            :href="facebookURL"
-            target="_blank"
-            rel="nofollow"
-            >シェアする</a
-          > -->
           <v-card-actions class="center-flex">
+            <button class="submit-btn">
+              <ShareNetwork network="facebook" :url="getShareUrl">
+                <!-- <font-awesome-icon icon="fa-facebook" /> -->
+                facebookでシェア
+              </ShareNetwork>
+            </button>
             <button
               class="submit-btn"
               @click="(inputValidateFlg = false), postCompleteFlg && reload()"
@@ -176,10 +175,13 @@ export default {
         this.inputValidateFlg = true;
         return;
       }
+      this.postCompleteFlg = true;
+      this.inputValidateText = "このカルタが投稿されたよ。";
+      this.inputValidateFlg = true;
       this.karutaList = await this.$request.get("karuta", "desc", "createdAt");
       this.postId = `karuta_${this.karutaList.length + 1}`;
-      // const postSelector = document.querySelector("#post-karuta");
-      // const url = await this.$request.uploadImage(postSelector, this.postId);
+      const postSelector = document.querySelector("#post-karuta");
+      const url = await this.$request.uploadImage(postSelector, this.postId);
       this.ogpImageURL = url;
       const setData = {
         id: this.postId,
@@ -190,20 +192,14 @@ export default {
         createdAt: ""
       };
       await this.$request.set(this.postId, setData);
-      this.postCompleteFlg = true;
-      this.inputValidateText = "このカルタが投稿されたよ。";
-      this.inputValidateFlg = true;
     },
     reload() {
       location.reload();
     }
   },
   computed: {
-    url() {
-      return `https://cha-karuta.web.app`;
-    },
-    facebookURL() {
-      return `https://www.facebook.com/sharer/sharer.php?u=${this.url}&t=test`;
+    getShareUrl() {
+      return `${window.location.href}/posts/${this.postId}`;
     }
   },
   mounted() {

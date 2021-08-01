@@ -4,6 +4,9 @@ require("dotenv").config();
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
+    // base: {
+    //   href: "router.base"
+    // },
     titleTemplate: "%s - 3cha-karuta",
     title: "3cha-karuta",
     htmlAttrs: {
@@ -12,17 +15,42 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: 'description', name: 'description', content: '三茶WORK2周年記念企画！三茶の日常をカルタにしよう！あまりにも面白くなったら本当のカルタになる！かも！' },
-      { hid: 'og:site_name', property: 'og:site_name', content: 'さんちゃかるた' },
-      { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://3chawork.tokyo/sancha-karuta/' },
-      { hid: 'og:title', property: 'og:title', content: 'さんちゃかるた' },
-      { hid: 'og:description', property: 'og:description', content: '三茶WORK2周年記念企画！三茶の日常をカルタにしよう！あまりにも面白くなったら本当のカルタになる！かも！' },
-      { hid: 'og:image', property: 'og:image', content: '/ogp-main.png' },
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "三茶WORK2周年記念企画！三茶の日常をカルタにしよう！あまりにも面白くなったら本当のカルタになる！かも！"
+      },
+      {
+        hid: "og:site_name",
+        property: "og:site_name",
+        content: "さんちゃかるた"
+      },
+      { hid: "og:type", property: "og:type", content: "website" },
+      {
+        hid: "og:url",
+        property: "og:url",
+        content: "https://3chawork.tokyo/sancha-karuta/"
+      },
+      { hid: "og:title", property: "og:title", content: "さんちゃかるた" },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content:
+          "三茶WORK2周年記念企画！三茶の日常をカルタにしよう！あまりにも面白くなったら本当のカルタになる！かも！"
+      },
+      { hid: "og:image", property: "og:image", content: "ogp-main.png" },
       { name: "format-detection", content: "telephone=no" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "favicon.ico" }]
   },
+  // router: {
+  //   base: "/sancha-karuta/",
+  //   trailingSlash: true
+  // },
+  // build: {
+  //   publicPath: "/"
+  // },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
@@ -32,7 +60,11 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: "@/plugins/firebase" }, { src: "~/plugins/kanaList" }],
+  plugins: [
+    { src: "@/plugins/firebase" },
+    { src: "~/plugins/kanaList" },
+    { src: "~/plugins/vue-social-sharing" }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -76,13 +108,6 @@ export default {
 
   moment: {
     locales: ["ja"]
-  },
-  router: {
-    base: '/sancha-karuta/',
-    trailingSlash: true,
-  },
-  build: {
-    publicPath: '/'
   },
   publicRuntimeConfig: {
     apiKey: process.env.FIREBASE_API_KEY,

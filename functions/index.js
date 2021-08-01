@@ -4,42 +4,46 @@ admin.initializeApp();
 
 // const CONFIG = functions.config();
 // const appDomain = CONFIG.app.domain;
-// const firestore = admin.firestore();
+const firestore = admin.firestore();
 
-exports.posts = functions.https.onRequest((req, res) => {
+exports.posts = functions.https.onRequest(async (req, res) => {
   if (req.params[0] !== undefined) {
     const [, , postId] = req.path.split("/");
-    console.log(postId);
-    // const snapShot = await firestore
-    //     .collection("karuta")
-    //     .doc()
-    //     .get();
-    // console.log(snapShot);
-    // const SITEURL = `https://${appDomain}`;
-    // const PAGEURL = `${SITEURL}/posts/${postId}`;
-    // const TITLE = `view ${escapeHtml(uname)}'s colorsets on colorinco`;
+    console.log("postId", postId);
+    const snapShot = await firestore
+        .collection("karuta")
+        .doc(postId)
+        .get();
+    const postData = snapShot.data();
+    console.log("postData", postData);
+    const SITEURL = "https://3chawork.tokyo/sancha-karuta";
+    const PAGEURL = `${SITEURL}/posts/${postId}`;
+    const TITLE = `${postData.userName}のかるた by さんちゃかるた`;
+    const IMAGE = `${postData.ogpImageURL}`;
     const DESCRIPTION =
-      "カラーインコはTwitterでお気に入りしている画像のカラーパレットを表示・ストックできるサービスです。";
+      `三茶WORK2周年記念企画！三茶の日常をカルタにしよう！
+      あまりにも面白くなったら本当のカルタになる！かも！`;
     res.set("Cache-Control", "public, max-age=600, s-maxage=600");
 
     res.status(200).send(`<!doctype html>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>Christmas</title>
-        <meta property="og:title" content="">
-        <meta property="og:image" content="">
+        <title>さんちゃかるた</title>
+        <meta property="og:title" content="${TITLE}">
+        <meta property="og:image" content="${IMAGE}">
         <meta property="og:description" content="${DESCRIPTION}">
-        <meta property="og:url" content="">
+        <meta property="og:url" content="${PAGEURL}">
         <meta property="og:type" content="website">
-        <meta property="og:site_name" content="">
-        <meta name="twitter:site" content="クリスマスカード">
+        <meta property="og:site_name" content="さんちゃかるた">
+        <meta name="twitter:site" content="${SITEURL}">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="">
-        <meta name="twitter:image" content="">
+        <meta name="twitter:title" content="${TITLE}">
+        <meta name="twitter:image" content="${IMAGE}">
         <meta name="twitter:description" content="${DESCRIPTION}">
       </head>
       <body>
+        <script>location.href = "https://3chawork.tokyo/sancha-karuta"; </script>
       </body>
     </html>`);
   }

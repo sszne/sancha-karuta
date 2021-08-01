@@ -19,9 +19,11 @@
     "nuxt": "^2.15.7",
     "nuxt-webfontloader": "^1.1.0",
     "vue-html2canvas": "^0.0.4",
+    "vue-social-sharing": "^3.0.8",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/vuetify": "^1.12.1"
