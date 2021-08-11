@@ -54,7 +54,7 @@
           <input
             class="action-type nickname"
             type="text"
-            maxlength="6"
+            maxlength="12"
             v-model="inputUserName"
             placeholder="三茶かるたん"
           />
@@ -102,12 +102,11 @@
             inputValidateText
           }}</v-card-text>
           <v-card-actions class="center-flex">
-            <button class="submit-btn">
+            <!-- <button class="submit-btn">
               <ShareNetwork network="facebook" :url="getShareUrl">
-                <!-- <font-awesome-icon icon="fa-facebook" /> -->
                 facebookでシェア
               </ShareNetwork>
-            </button>
+            </button> -->
             <button
               class="submit-btn"
               @click="(inputValidateFlg = false), postCompleteFlg && reload()"
@@ -175,14 +174,11 @@ export default {
         this.inputValidateFlg = true;
         return;
       }
-      this.postCompleteFlg = true;
-      this.inputValidateText = "このカルタが投稿されたよ。";
-      this.inputValidateFlg = true;
       this.karutaList = await this.$request.get("karuta", "desc", "createdAt");
       this.postId = `karuta_${this.karutaList.length + 1}`;
-      const postSelector = document.querySelector("#post-karuta");
-      const url = await this.$request.uploadImage(postSelector, this.postId);
-      this.ogpImageURL = url;
+      // const postSelector = document.querySelector("#post-karuta");
+      // const url = await this.$request.uploadImage(postSelector, this.postId);
+      // this.ogpImageURL = url;
       const setData = {
         id: this.postId,
         kana: this.selectKana,
@@ -192,6 +188,9 @@ export default {
         createdAt: ""
       };
       await this.$request.set(this.postId, setData);
+      this.postCompleteFlg = true;
+      this.inputValidateText = "このカルタが投稿されたよ。";
+      this.inputValidateFlg = true;
     },
     reload() {
       location.reload();

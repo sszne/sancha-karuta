@@ -11,7 +11,7 @@ const getKanaList = () => {
     {
       id: 1,
       kana: ["か", "き", "く", "け", "こ"],
-      startDate: "2021-08-8 00:00",
+      startDate: "2021-08-08 00:00",
       endDate: "2021-08-14 23:59"
     },
     {
@@ -59,16 +59,23 @@ const getKanaList = () => {
     {
       id: 9,
       kana: ["わ", "を", "ん"],
-      startDate: "2021-09-11 00:00",
+      startDate: "2021-10-03 00:00",
       endDate: "2021-10-07 23:59"
     }
   ];
   const result = KANA_LIST.filter((e: any) => {
+    console.log(
+      "momtent",
+      e,
+      moment().isAfter(e.startDate, "minute"),
+      moment().isBefore(e.endDate, "minute")
+    );
     return (
       moment().isAfter(e.startDate, "minute") &&
       moment().isBefore(e.endDate, "minute")
     );
   });
+  console.log("result", result);
   return result[0].kana;
 };
 

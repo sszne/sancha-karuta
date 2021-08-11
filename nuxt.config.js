@@ -4,9 +4,9 @@ require("dotenv").config();
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    // base: {
-    //   href: "router.base"
-    // },
+    base: {
+      href: "router.base"
+    },
     titleTemplate: "%s - 3cha-karuta",
     title: "3cha-karuta",
     htmlAttrs: {
@@ -44,13 +44,13 @@ export default {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "favicon.ico" }]
   },
-  // router: {
-  //   base: "/sancha-karuta/",
-  //   trailingSlash: true
-  // },
-  // build: {
-  //   publicPath: "/"
-  // },
+  router: {
+    base: "/sancha-karuta/",
+    trailingSlash: true
+  },
+  build: {
+    publicPath: "/"
+  },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
