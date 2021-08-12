@@ -52,7 +52,7 @@ const set = async (doc: string, setData: any) => {
   try {
     const collectionRef = firebase
       .firestore()
-      .collection("karuta")
+      .collection("karuta_st")
       .doc(doc);
     setData.createdAt = firebase.firestore.Timestamp.now();
     const res = await collectionRef.set(setData);

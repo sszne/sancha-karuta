@@ -102,11 +102,9 @@
             inputValidateText
           }}</v-card-text>
           <v-card-actions class="center-flex">
-            <!-- <button class="submit-btn">
-              <ShareNetwork network="facebook" :url="getShareUrl">
-                facebookでシェア
-              </ShareNetwork>
-            </button> -->
+            <button class="submit-btn" @click="facebookShare()">
+              facebookでシェア
+            </button>
             <button
               class="submit-btn"
               @click="(inputValidateFlg = false), postCompleteFlg && reload()"
@@ -139,7 +137,8 @@ export default {
   async asyncData(context) {
     return {
       karutaList:
-        (await context.app.$request.get("karuta", "desc", "createdAt")) || [],
+        (await context.app.$request.get("karuta_st", "desc", "createdAt")) ||
+        [],
       weekKarutaList: [],
       archiveKarutaList: [],
       kanaList: (await context.app.$kana.getKanaList()) || [],
@@ -174,11 +173,15 @@ export default {
         this.inputValidateFlg = true;
         return;
       }
-      this.karutaList = await this.$request.get("karuta", "desc", "createdAt");
+      this.karutaList = await this.$request.get(
+        "karuta_st",
+        "desc",
+        "createdAt"
+      );
       this.postId = `karuta_${this.karutaList.length + 1}`;
-      // const postSelector = document.querySelector("#post-karuta");
-      // const url = await this.$request.uploadImage(postSelector, this.postId);
-      // this.ogpImageURL = url;
+      const postSelector = document.querySelector("#post-karuta");
+      const url = await this.$request.uploadImage(postSelector, this.postId);
+      this.ogpImageURL = url;
       const setData = {
         id: this.postId,
         kana: this.selectKana,
@@ -191,6 +194,15 @@ export default {
       this.postCompleteFlg = true;
       this.inputValidateText = "このカルタが投稿されたよ。";
       this.inputValidateFlg = true;
+    },
+    facebookShare() {
+      const baseUrl = 'https://www.facebook.com/sharer/sharer.php?'
+      const url = ['u', `${location.href}/posts/${this.postId}`]
+      const parameter = new URLSearchParams([url]).toString()
+      const shareUrl = `${baseUrl}${parameter}`
+      setTimeout(2000);
+      window.open(shareUrl, 'facebook', 'top=200,left=300,width=600,height=600')
+      setTimeout(() => location.reload(), 2000);
     },
     reload() {
       location.reload();

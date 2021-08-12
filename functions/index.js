@@ -11,7 +11,7 @@ exports.posts = functions.https.onRequest(async (req, res) => {
     const [, , postId] = req.path.split("/");
     console.log("postId", postId);
     const snapShot = await firestore
-        .collection("karuta")
+        .collection("karuta_st")
         .doc(postId)
         .get();
     const postData = snapShot.data();
@@ -20,8 +20,7 @@ exports.posts = functions.https.onRequest(async (req, res) => {
     const PAGEURL = `${SITEURL}/posts/${postId}`;
     const TITLE = `${postData.userName}のかるた by さんちゃかるた`;
     const IMAGE = `${postData.ogpImageURL}`;
-    const DESCRIPTION =
-      `三茶WORK2周年記念企画！三茶の日常をカルタにしよう！
+    const DESCRIPTION = `三茶WORK2周年記念企画！三茶の日常をカルタにしよう！
       あまりにも面白くなったら本当のカルタになる！かも！`;
     res.set("Cache-Control", "public, max-age=600, s-maxage=600");
 
@@ -30,8 +29,11 @@ exports.posts = functions.https.onRequest(async (req, res) => {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>さんちゃかるた</title>
+        <meta property="fb:app_id" content="561144731039445">
         <meta property="og:title" content="${TITLE}">
         <meta property="og:image" content="${IMAGE}">
+        <meta property="og:image:width" content="315" />
+        <meta property="og:image:height" content="315" />
         <meta property="og:description" content="${DESCRIPTION}">
         <meta property="og:url" content="${PAGEURL}">
         <meta property="og:type" content="website">
