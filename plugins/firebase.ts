@@ -52,7 +52,7 @@ const set = async (doc: string, setData: any) => {
   try {
     const collectionRef = firebase
       .firestore()
-      .collection("karuta_st")
+      .collection("karuta")
       .doc(doc);
     setData.createdAt = firebase.firestore.Timestamp.now();
     const res = await collectionRef.set(setData);
@@ -69,7 +69,9 @@ const uploadImage = async (selector: any, postId: string) => {
       allowTaint: false,
       useCORS: true,
       imageTimeout: 0,
-      scale: 1
+      scale: 1,
+      // width: 900,
+      // height: 480
     });
     const img = canvas.toDataURL();
     const storageRef = firebase.storage().ref();

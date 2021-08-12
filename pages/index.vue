@@ -39,10 +39,12 @@
               <span class="head">{{ item }}</span>
             </button>
           </div>
-          <div class="action-karuta-box" id="post-karuta">
-            <span class="head">{{ selectKana }}</span>
-            <p class="text">{{ inputText }}</p>
-            <p class="user-name">{{ inputUserName }}</p>
+          <div id="post-karuta">
+            <div class="action-karuta-box">
+              <span class="head">{{ selectKana }}</span>
+              <p class="text">{{ inputText }}</p>
+              <p class="user-name">{{ inputUserName }}</p>
+            </div>
           </div>
           <textarea
             class="action-type"
@@ -90,10 +92,9 @@
       <div
         class="dialog"
         v-if="inputValidateFlg"
-        @click="inputValidateFlg = false"
       >
         <v-card class="dialog-card">
-          <div v-if="postCompleteFlg" class="action-karuta-box">
+          <div v-if="postCompleteFlg" class="action-karuta-box submit">
             <span class="head">{{ selectKana }}</span>
             <p class="text">{{ inputText }}</p>
             <p class="user-name">{{ inputUserName }}</p>
@@ -137,7 +138,7 @@ export default {
   async asyncData(context) {
     return {
       karutaList:
-        (await context.app.$request.get("karuta_st", "desc", "createdAt")) ||
+        (await context.app.$request.get("karuta", "desc", "createdAt")) ||
         [],
       weekKarutaList: [],
       archiveKarutaList: [],
@@ -174,7 +175,7 @@ export default {
         return;
       }
       this.karutaList = await this.$request.get(
-        "karuta_st",
+        "karuta",
         "desc",
         "createdAt"
       );
@@ -197,7 +198,7 @@ export default {
     },
     facebookShare() {
       const baseUrl = 'https://www.facebook.com/sharer/sharer.php?'
-      const url = ['u', `${location.href}/posts/${this.postId}`]
+      const url = ['u', `https://cha-karuta.web.app/posts/${this.postId}`]
       const parameter = new URLSearchParams([url]).toString()
       const shareUrl = `${baseUrl}${parameter}`
       setTimeout(2000);
@@ -206,11 +207,6 @@ export default {
     },
     reload() {
       location.reload();
-    }
-  },
-  computed: {
-    getShareUrl() {
-      return `${window.location.href}/posts/${this.postId}`;
     }
   },
   mounted() {
