@@ -160,12 +160,12 @@ export default {
     },
     getWeekKarutaList(karutaList) {
       this.weekKarutaList = karutaList.filter(karuta =>
-        this.kanaList.includes(karuta.kana)
+        this.kanaList.includes(karuta.kana) && karuta.kana !== "0"
       );
     },
     getArchiveKarutaList(karutaList) {
       this.archiveKarutaList = karutaList.filter(
-        karuta => !this.kanaList.includes(karuta.kana)
+        karuta => !this.kanaList.includes(karuta.kana) && karuta.kana !== "0"
       );
     },
     async submitMessage(inputText, inputUserName) {
