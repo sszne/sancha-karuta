@@ -23,6 +23,20 @@ const get = async (
   }
 };
 
+const getDoc = async (postId: string) => {
+  try {
+    const docRef = await firebase
+      .firestore()
+      .collection("karuta")
+      .doc(postId);
+    const snapShot = await docRef.get();
+    const result = snapShot.data();
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const where = async (
   doc: string,
   field: string,
@@ -62,6 +76,23 @@ const set = async (doc: string, setData: any) => {
   }
 };
 
+const setLikeValue = async (postId: string) => {
+  try {
+    const docRef = firebase
+      .firestore()
+      .collection("karuta")
+      .doc(postId);
+    const snapShot = await docRef.get();
+    const data = snapShot.data();
+    const likeValue = (data && data.like) || 0;
+    console.log(likeValue);
+    const res = await docRef.set({ like: likeValue + 1 }, { merge: true });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const uploadImage = async (selector: any, postId: string) => {
   try {
     window.scrollTo(0, 0);
@@ -69,7 +100,7 @@ const uploadImage = async (selector: any, postId: string) => {
       allowTaint: false,
       useCORS: true,
       imageTimeout: 0,
-      scale: 1,
+      scale: 1
       // width: 900,
       // height: 480
     });
@@ -100,8 +131,10 @@ export default function injectFirebase(context: any, inject: any) {
   }
   inject("request", {
     get,
+    getDoc,
     where,
     set,
+    setLikeValue,
     uploadImage
   });
 }

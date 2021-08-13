@@ -75,11 +75,15 @@
           class="karuta-box"
           v-for="item in weekKarutaList"
           :key="item"
-          @click="showArchiveDetail(item.id)"
+          @click="showArchiveDetail(item)"
         >
           <span class="head">{{ item.kana }}</span>
           <p class="text">{{ item.body }}</p>
           <p class="user-name">{{ item.userName }}</p>
+          <div class="like-badge">
+            <v-icon>mdi-thumb-up</v-icon>
+            <p>{{ item.like }}</p>
+          </div>
         </div>
       </div>
       <div class="past">
@@ -101,6 +105,11 @@
             <p class="text">{{ inputText }}</p>
             <p class="user-name">{{ inputUserName }}</p>
           </div>
+          <div v-if="archiveDetailFlg" class="action-karuta-box submit">
+            <span class="head">{{ selectArchiveKana }}</span>
+            <p class="text">{{ selectArchiveBody }}</p>
+            <p class="user-name">{{ selectArchiveUser }}</p>
+          </div>
           <v-card-text class="dialog-text center-flex">{{
             inputValidateText
           }}</v-card-text>
@@ -113,10 +122,21 @@
               facebookでシェア
             </button>
             <button
+              v-if="likeButtonFlg"
               class="submit-btn"
-              @click="(inputValidateFlg = false), postCompleteFlg && reload()"
+              @click="pushLikeValue()"
             >
-              わかったよ
+              いいね！する
+            </button>
+            <button
+              class="submit-btn"
+              @click="
+                (inputValidateFlg = false),
+                  postCompleteFlg && reload(),
+                  !likeButtonFlg && reload()
+              "
+            >
+              {{ buttonText }}
             </button>
           </v-card-actions>
         </v-card>
@@ -154,7 +174,13 @@ export default {
       inputFlg: false,
       inputValidateFlg: false,
       inputValidateText: "",
+      buttonText: "わかったよ",
       postCompleteFlg: false,
+      archiveDetailFlg: false,
+      selectArchiveKana: "",
+      selectArchiveBody: "",
+      selectArchiveUser: "",
+      likeButtonFlg: false,
       postId: "",
       ogpImageURL: ""
     };
@@ -189,6 +215,7 @@ export default {
         kana: this.selectKana,
         body: inputText,
         userName: inputUserName,
+        like: 0,
         ogpImageURL: this.ogpImageURL,
         createdAt: ""
       };
@@ -197,11 +224,22 @@ export default {
       this.inputValidateText = "このカルタが投稿されたよ。";
       this.inputValidateFlg = true;
     },
-    async showArchiveDetail(postId) {
-      this.postCompleteFlg = true;
-      this.inputValidateText = `このカルタが気に入ったらいいね！しよう${postId}`;
+    async showArchiveDetail(item) {
+      this.postId = item.id;
+      this.selectArchiveKana = item.kana;
+      this.selectArchiveBody = item.body;
+      this.selectArchiveUser = item.userName;
+      this.archiveDetailFlg = true;
+      this.inputValidateText = "このカルタが気に入ったらいいね！しよう";
+      this.likeButtonFlg = true;
+      this.buttonText = "やめとく";
       this.inputValidateFlg = true;
-      // await this.$request.set(this.postId, setData);
+    },
+    async pushLikeValue() {
+      await this.$request.setLikeValue(this.postId);
+      this.inputValidateText = "このカルタにいいね！されました。";
+      this.buttonText = "わかったよ";
+      this.likeButtonFlg = false;
     },
     facebookShare() {
       const baseUrl = "https://www.facebook.com/sharer/sharer.php?";

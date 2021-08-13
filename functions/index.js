@@ -32,8 +32,8 @@ exports.posts = functions.https.onRequest(async (req, res) => {
         <meta property="fb:app_id" content="561144731039445">
         <meta property="og:title" content="${TITLE}">
         <meta property="og:image" content="${IMAGE}">
-        <meta property="og:image:width" content="900" />
-        <meta property="og:image:height" content="480" />
+        <meta property="og:image:width" content="" />
+        <meta property="og:image:height" content="315" />
         <meta property="og:description" content="${DESCRIPTION}">
         <meta property="og:url" content="${PAGEURL}">
         <meta property="og:type" content="website">
