@@ -105,7 +105,11 @@
             inputValidateText
           }}</v-card-text>
           <v-card-actions class="center-flex">
-            <button class="submit-btn" @click="facebookShare()">
+            <button
+              v-if="postCompleteFlg"
+              class="submit-btn"
+              @click="facebookShare()"
+            >
               facebookでシェア
             </button>
             <button
