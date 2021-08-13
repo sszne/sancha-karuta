@@ -93,6 +93,10 @@
             <span class="head">{{ item.kana }}</span>
             <p class="text">{{ item.body }}</p>
             <p class="user-name">{{ item.userName }}</p>
+            <div class="like-badge">
+              <v-icon>mdi-thumb-up</v-icon>
+              <p>{{ item.like }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -201,7 +205,7 @@ export default {
     },
     async submitMessage(inputText, inputUserName) {
       if (!this.$kana.checkFirstKana(inputText.slice(0, 1), this.selectKana)) {
-        this.inputValidateText = "はじめの文字はカルタと同じにしてね。";
+        this.inputValidateText = "はじめの文字はかるたと同じにしてね。";
         this.inputValidateFlg = true;
         return;
       }
@@ -221,7 +225,7 @@ export default {
       };
       await this.$request.set(this.postId, setData);
       this.postCompleteFlg = true;
-      this.inputValidateText = "このカルタが投稿されたよ。";
+      this.inputValidateText = "このかるたが投稿されたよ。";
       this.inputValidateFlg = true;
     },
     async showArchiveDetail(item) {
@@ -230,7 +234,7 @@ export default {
       this.selectArchiveBody = item.body;
       this.selectArchiveUser = item.userName;
       this.archiveDetailFlg = true;
-      this.inputValidateText = "このカルタが気に入ったらいいね！しよう";
+      this.inputValidateText = "このかるたが気に入ったらいいね！しよう";
       this.likeButtonFlg = true;
       this.buttonText = "やめとく";
       this.inputValidateFlg = true;
