@@ -204,6 +204,7 @@ export default {
       );
     },
     async submitMessage(inputText, inputUserName) {
+      history.replaceState("", "", "");
       if (!this.$kana.checkFirstKana(inputText.slice(0, 1), this.selectKana)) {
         this.inputValidateText = "はじめの文字はかるたと同じにしてね。";
         this.inputValidateFlg = true;
@@ -227,6 +228,9 @@ export default {
       this.postCompleteFlg = true;
       this.inputValidateText = "このかるたが投稿されたよ。";
       this.inputValidateFlg = true;
+      this.archiveDetailFlg = false;
+      this.likeButtonFlg = false;
+      this.buttonText = "わかった";
     },
     async showArchiveDetail(item) {
       this.postId = item.id;
@@ -240,6 +244,7 @@ export default {
       this.inputValidateFlg = true;
     },
     async pushLikeValue() {
+      history.replaceState("", "", "");
       await this.$request.setLikeValue(this.postId);
       this.inputValidateText = "このカルタにいいね！されました。";
       this.buttonText = "わかったよ";
@@ -262,11 +267,16 @@ export default {
       location.reload();
     }
   },
-  mounted() {
+  async mounted() {
     this.selectKana = this.kanaList[0];
     this.postId = `karuta_${this.karutaList.length + 1}`;
     this.getWeekKarutaList(this.karutaList);
     this.getArchiveKarutaList(this.karutaList);
+    if (location.search.match("karuta_")) {
+      const postId = location.search.slice(1);
+      const karutaDetail = await this.$request.getDoc(postId);
+      this.showArchiveDetail(karutaDetail);
+    }
   },
   transition: "fade"
 };

@@ -45,7 +45,7 @@ exports.posts = functions.https.onRequest(async (req, res) => {
         <meta name="twitter:description" content="${DESCRIPTION}">
       </head>
       <body>
-        <script>location.href = "https://3chawork.tokyo/sancha-karuta"; </script>
+        <script>location.href = "https://3chawork.tokyo/sancha-karuta/?${postId}"; </script>
       </body>
     </html>`);
   }

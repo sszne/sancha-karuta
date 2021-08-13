@@ -30,7 +30,9 @@ const getDoc = async (postId: string) => {
       .collection("karuta")
       .doc(postId);
     const snapShot = await docRef.get();
+    console.log(snapShot);
     const result = snapShot.data();
+    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
