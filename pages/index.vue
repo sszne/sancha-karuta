@@ -89,10 +89,7 @@
       </div>
     </div>
     <transition name="fade-fast">
-      <div
-        class="dialog"
-        v-if="inputValidateFlg"
-      >
+      <div class="dialog" v-if="inputValidateFlg">
         <v-card class="dialog-card">
           <div v-if="postCompleteFlg" class="action-karuta-box submit">
             <span class="head">{{ selectKana }}</span>
@@ -103,7 +100,11 @@
             inputValidateText
           }}</v-card-text>
           <v-card-actions class="center-flex">
-            <button class="submit-btn" @click="facebookShare()">
+            <button
+              v-if="postCompleteFlg"
+              class="submit-btn"
+              @click="facebookShare()"
+            >
               facebookでシェア
             </button>
             <button
@@ -138,8 +139,7 @@ export default {
   async asyncData(context) {
     return {
       karutaList:
-        (await context.app.$request.get("karuta", "desc", "createdAt")) ||
-        [],
+        (await context.app.$request.get("karuta", "desc", "createdAt")) || [],
       weekKarutaList: [],
       archiveKarutaList: [],
       kanaList: (await context.app.$kana.getKanaList()) || [],
@@ -159,8 +159,8 @@ export default {
       this.selectKana = value;
     },
     getWeekKarutaList(karutaList) {
-      this.weekKarutaList = karutaList.filter(karuta =>
-        this.kanaList.includes(karuta.kana) && karuta.kana !== "0"
+      this.weekKarutaList = karutaList.filter(
+        karuta => this.kanaList.includes(karuta.kana) && karuta.kana !== "0"
       );
     },
     getArchiveKarutaList(karutaList) {
@@ -174,11 +174,7 @@ export default {
         this.inputValidateFlg = true;
         return;
       }
-      this.karutaList = await this.$request.get(
-        "karuta",
-        "desc",
-        "createdAt"
-      );
+      this.karutaList = await this.$request.get("karuta", "desc", "createdAt");
       this.postId = `karuta_${this.karutaList.length + 1}`;
       const postSelector = document.querySelector("#post-karuta");
       const url = await this.$request.uploadImage(postSelector, this.postId);
@@ -197,12 +193,16 @@ export default {
       this.inputValidateFlg = true;
     },
     facebookShare() {
-      const baseUrl = 'https://www.facebook.com/sharer/sharer.php?'
-      const url = ['u', `https://cha-karuta.web.app/posts/${this.postId}`]
-      const parameter = new URLSearchParams([url]).toString()
-      const shareUrl = `${baseUrl}${parameter}`
+      const baseUrl = "https://www.facebook.com/sharer/sharer.php?";
+      const url = ["u", `https://cha-karuta.web.app/posts/${this.postId}`];
+      const parameter = new URLSearchParams([url]).toString();
+      const shareUrl = `${baseUrl}${parameter}`;
       setTimeout(2000);
-      window.open(shareUrl, 'facebook', 'top=200,left=300,width=600,height=600')
+      window.open(
+        shareUrl,
+        "facebook",
+        "top=200,left=300,width=600,height=600"
+      );
       setTimeout(() => location.reload(), 2000);
     },
     reload() {
