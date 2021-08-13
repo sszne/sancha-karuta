@@ -71,7 +71,12 @@
         </div>
       </transition>
       <div class="archive area-flex">
-        <div class="karuta-box" v-for="item in weekKarutaList" :key="item">
+        <div
+          class="karuta-box"
+          v-for="item in weekKarutaList"
+          :key="item"
+          @click="showArchiveDetail(item.id)"
+        >
           <span class="head">{{ item.kana }}</span>
           <p class="text">{{ item.body }}</p>
           <p class="user-name">{{ item.userName }}</p>
@@ -89,10 +94,7 @@
       </div>
     </div>
     <transition name="fade-fast">
-      <div
-        class="dialog"
-        v-if="inputValidateFlg"
-      >
+      <div class="dialog" v-if="inputValidateFlg">
         <v-card class="dialog-card">
           <div v-if="postCompleteFlg" class="action-karuta-box submit">
             <span class="head">{{ selectKana }}</span>
@@ -138,8 +140,7 @@ export default {
   async asyncData(context) {
     return {
       karutaList:
-        (await context.app.$request.get("karuta", "desc", "createdAt")) ||
-        [],
+        (await context.app.$request.get("karuta", "desc", "createdAt")) || [],
       weekKarutaList: [],
       archiveKarutaList: [],
       kanaList: (await context.app.$kana.getKanaList()) || [],
@@ -159,8 +160,8 @@ export default {
       this.selectKana = value;
     },
     getWeekKarutaList(karutaList) {
-      this.weekKarutaList = karutaList.filter(karuta =>
-        this.kanaList.includes(karuta.kana) && karuta.kana !== "0"
+      this.weekKarutaList = karutaList.filter(
+        karuta => this.kanaList.includes(karuta.kana) && karuta.kana !== "0"
       );
     },
     getArchiveKarutaList(karutaList) {
@@ -174,11 +175,7 @@ export default {
         this.inputValidateFlg = true;
         return;
       }
-      this.karutaList = await this.$request.get(
-        "karuta",
-        "desc",
-        "createdAt"
-      );
+      this.karutaList = await this.$request.get("karuta", "desc", "createdAt");
       this.postId = `karuta_${this.karutaList.length + 1}`;
       const postSelector = document.querySelector("#post-karuta");
       const url = await this.$request.uploadImage(postSelector, this.postId);
@@ -196,13 +193,23 @@ export default {
       this.inputValidateText = "このカルタが投稿されたよ。";
       this.inputValidateFlg = true;
     },
+    async showArchiveDetail(postId) {
+      this.postCompleteFlg = true;
+      this.inputValidateText = `このカルタが気に入ったらいいね！しよう${postId}`;
+      this.inputValidateFlg = true;
+      // await this.$request.set(this.postId, setData);
+    },
     facebookShare() {
-      const baseUrl = 'https://www.facebook.com/sharer/sharer.php?'
-      const url = ['u', `https://cha-karuta.web.app/posts/${this.postId}`]
-      const parameter = new URLSearchParams([url]).toString()
-      const shareUrl = `${baseUrl}${parameter}`
+      const baseUrl = "https://www.facebook.com/sharer/sharer.php?";
+      const url = ["u", `https://cha-karuta.web.app/posts/${this.postId}`];
+      const parameter = new URLSearchParams([url]).toString();
+      const shareUrl = `${baseUrl}${parameter}`;
       setTimeout(2000);
-      window.open(shareUrl, 'facebook', 'top=200,left=300,width=600,height=600')
+      window.open(
+        shareUrl,
+        "facebook",
+        "top=200,left=300,width=600,height=600"
+      );
       setTimeout(() => location.reload(), 2000);
     },
     reload() {
