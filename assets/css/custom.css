@@ -323,6 +323,7 @@
   height: 100vh;
   background: rgba(140, 140, 20, 0.2);
   z-index: 9999;
+  overflow-y: scroll;
 }
 .dialog .submit-btn {
   margin-top: unset;
@@ -335,7 +336,6 @@
   border-radius: 20px !important;
 }
 .dialog-text {
-  /* padding: 38px 0 !important; */
   font-size: 23px !important;
   text-align: center;
   font-weight: bold !important;
@@ -441,6 +441,8 @@
   .action-karuta-box.submit {
     margin: auto;
     width: 100%;
+    max-width: 310px;
+    border: solid 7px #fff000;
   }
   .action-karuta-box .head {
     width: 80px;
@@ -482,22 +484,30 @@
   }
   .submit-btn {
     font-size: 26px;
-    padding: 18px 20px;
+    padding: 12px 20px;
   }
   .submit-btn a {
     font-size: 18px;
   }
   .dialog-card {
-    width: 95%;
+    padding: 20px 20px 0px 20px;
+    width: 92%;
   }
   .dialog-card .action-karuta-box {
     max-height: 310px;
   }
   .dialog-card .action-karuta-box p.text {
-    top: 16px;
-    right: 94px;
-    font-size: 35px;
+    top: 17px;
+    right: 104px;
+    font-size: 33px;
     line-height: 1.4em;
+  }
+  .dialog-text {
+    padding: 13px 8px 8px 8px !important;
+    font-size: 18px !important;
+  }
+  .dialog .submit-btn {
+    margin-bottom: 20px;
   }
 }
 @media (max-width: 413px) {

@@ -89,7 +89,12 @@
       <div class="past">
         <h2>過去のお題</h2>
         <div class="archive area-flex">
-          <div class="karuta-box" v-for="item in archiveKarutaList" :key="item">
+          <div
+            class="karuta-box"
+            v-for="item in archiveKarutaList"
+            :key="item"
+            @click="showArchiveDetail(item)"
+          >
             <span class="head">{{ item.kana }}</span>
             <p class="text">{{ item.body }}</p>
             <p class="user-name">{{ item.userName }}</p>
@@ -134,11 +139,7 @@
             </button>
             <button
               class="submit-btn"
-              @click="
-                (inputValidateFlg = false),
-                  postCompleteFlg && reload(),
-                  !likeButtonFlg && reload()
-              "
+              @click="(inputValidateFlg = false), reloadFlg && reload()"
             >
               {{ buttonText }}
             </button>
@@ -185,6 +186,7 @@ export default {
       selectArchiveBody: "",
       selectArchiveUser: "",
       likeButtonFlg: false,
+      reloadFlg: false,
       postId: "",
       ogpImageURL: ""
     };
@@ -205,9 +207,13 @@ export default {
     },
     async submitMessage(inputText, inputUserName) {
       history.replaceState("", "", "");
+      this.archiveDetailFlg = false;
+      this.likeButtonFlg = false;
+      this.buttonText = "わかったよ";
       if (!this.$kana.checkFirstKana(inputText.slice(0, 1), this.selectKana)) {
         this.inputValidateText = "はじめの文字はかるたと同じにしてね。";
         this.inputValidateFlg = true;
+        this.reloadFlg = false;
         return;
       }
       this.karutaList = await this.$request.get("karuta", "desc", "createdAt");
@@ -228,9 +234,7 @@ export default {
       this.postCompleteFlg = true;
       this.inputValidateText = "このかるたが投稿されたよ。";
       this.inputValidateFlg = true;
-      this.archiveDetailFlg = false;
-      this.likeButtonFlg = false;
-      this.buttonText = "わかった";
+      this.reloadFlg = true;
     },
     async showArchiveDetail(item) {
       this.postId = item.id;
@@ -238,7 +242,7 @@ export default {
       this.selectArchiveBody = item.body;
       this.selectArchiveUser = item.userName;
       this.archiveDetailFlg = true;
-      this.inputValidateText = "このかるたが気に入ったらいいね！しよう";
+      this.inputValidateText = "このかるたが気に入ったら、いいね！しよう。";
       this.likeButtonFlg = true;
       this.buttonText = "やめとく";
       this.inputValidateFlg = true;
@@ -246,9 +250,10 @@ export default {
     async pushLikeValue() {
       history.replaceState("", "", "");
       await this.$request.setLikeValue(this.postId);
-      this.inputValidateText = "このカルタにいいね！されました。";
+      this.inputValidateText = "このカルタにいいね！しました。";
       this.buttonText = "わかったよ";
       this.likeButtonFlg = false;
+      this.reloadFlg = true;
     },
     facebookShare() {
       const baseUrl = "https://www.facebook.com/sharer/sharer.php?";
@@ -265,6 +270,16 @@ export default {
     },
     reload() {
       location.reload();
+    }
+  },
+  watch: {
+    inputValidateFlg: function(inputValidateFlg) {
+      const el = document.querySelector("html");
+      if (inputValidateFlg) {
+        el.style = "overflow-y: hidden";
+      } else {
+        el.style = "overflow-y: scroll";
+      }
     }
   },
   async mounted() {
