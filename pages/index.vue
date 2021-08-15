@@ -123,20 +123,22 @@
             inputValidateText
           }}</v-card-text>
           <v-card-actions class="center-flex">
-            <button
-              v-if="postCompleteFlg"
-              class="submit-btn"
-              @click="facebookShare()"
-            >
-              facebookでシェア
-            </button>
-            <button
-              v-if="likeButtonFlg"
-              class="submit-btn"
-              @click="pushLikeValue()"
-            >
-              いいね！する
-            </button>
+            <div class="around-flex btn-group">
+              <button
+                v-if="likeButtonFlg"
+                class="submit-btn"
+                @click="pushLikeValue()"
+              >
+                {{ "いいね！" }}
+              </button>
+              <button
+                v-if="postCompleteFlg || likeButtonFlg"
+                class="submit-btn"
+                @click="facebookShare()"
+              >
+                {{ likeButtonFlg ? "シェア！" : "facebookでシェア" }}
+              </button>
+            </div>
             <button
               class="submit-btn"
               @click="(inputValidateFlg = false), reloadFlg && reload()"
@@ -153,19 +155,6 @@
 
 <script>
 export default {
-  // head() {
-  //   return {
-  //     meta: [
-  //       {
-  //         hid: "og:description",
-  //         property: "og:description",
-  //         content: `${this.inputUserName} の三茶カルタ`
-  //       },
-  //       { hid: "og:url", property: "og:url", content: "" },
-  //       { hid: "og:image", property: "og:image", content: this.ogpImageURL }
-  //     ]
-  //   };
-  // },
   async asyncData(context) {
     return {
       karutaList:
@@ -288,7 +277,13 @@ export default {
     this.getWeekKarutaList(this.karutaList);
     this.getArchiveKarutaList(this.karutaList);
     if (location.search.match("karuta_")) {
-      const postId = location.search.slice(1);
+      let postId = "";
+      if (location.search.match("&")) {
+        postId = location.search.substring(1, location.search.indexOf("&"));
+      } else {
+        postId = location.search.slice(1);
+      }
+      console.log(postId);
       const karutaDetail = await this.$request.getDoc(postId);
       this.showArchiveDetail(karutaDetail);
     }

@@ -77,6 +77,13 @@ a {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.around-flex {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
 #container {
   padding: 0px 0 0 0;
 }

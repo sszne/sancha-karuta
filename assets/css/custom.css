@@ -209,6 +209,8 @@
   outline: none;
   opacity: 1;
 }
+.btn-group {
+}
 .submit-btn {
   background-color: #fff000;
   -webkit-border-radius: 15px;
@@ -327,7 +329,11 @@
 }
 .dialog .submit-btn {
   margin-top: unset;
+  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 30px;
+  padding: 18px;
+  min-width: 280px;
 }
 .dialog-card {
   max-width: 700px !important;
@@ -483,8 +489,8 @@
     width: 100%;
   }
   .submit-btn {
-    font-size: 26px;
-    padding: 12px 20px;
+    font-size: 24px;
+    padding: 12px 13px;
   }
   .submit-btn a {
     font-size: 18px;
@@ -508,6 +514,8 @@
   }
   .dialog .submit-btn {
     margin-bottom: 20px;
+    padding: 12px 13px;
+    min-width: 60px;
   }
 }
 @media (max-width: 413px) {
