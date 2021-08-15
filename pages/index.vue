@@ -258,7 +258,7 @@ export default {
       setTimeout(() => location.reload(), 2000);
     },
     reload() {
-      location.reload();
+      location.search = "";
     }
   },
   watch: {
