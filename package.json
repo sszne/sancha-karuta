@@ -9,11 +9,21 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/firebase": "^7.6.1",
     "core-js": "^3.15.1",
+    "firebase": "^8.8.0",
+    "firebase-admin": "^9.11.0",
+    "firebase-tools": "^9.16.0",
+    "moment": "^2.29.1",
     "nuxt": "^2.15.7",
+    "nuxt-webfontloader": "^1.1.0",
+    "vue-html2canvas": "^0.0.4",
+    "vue-social-sharing": "^3.0.8",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/vuetify": "^1.12.1"
