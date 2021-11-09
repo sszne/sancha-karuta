@@ -60,7 +60,6 @@
             v-model="inputUserName"
             placeholder="三茶かるたん"
           />
-          <!-- <button 　class="submit-btn" @click="shareKaruta()">テスト</button> -->
           <button
             class="submit-btn"
             :disabled="inputText === '' && true"
@@ -86,7 +85,7 @@
           </div>
         </div>
       </div>
-      <div class="past">
+      <!-- <div class="past">
         <h2>過去のお題</h2>
         <div class="archive area-flex">
           <div
@@ -104,7 +103,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <transition name="fade-fast">
       <div class="dialog" v-if="inputValidateFlg">
@@ -154,6 +153,7 @@
 </template>
 
 <script>
+import { allKana } from "@/types/allKana";
 export default {
   async asyncData(context) {
     return {
@@ -161,7 +161,8 @@ export default {
         (await context.app.$request.get("karuta", "desc", "createdAt")) || [],
       weekKarutaList: [],
       archiveKarutaList: [],
-      kanaList: (await context.app.$kana.getKanaList()) || [],
+      // kanaList: (await context.app.$kana.getKanaList()) || [],
+      kanaList: allKana,
       selectKana: "",
       inputText: "",
       inputUserName: "",

@@ -74,7 +74,7 @@
   width: 200px;
   height: 200px;
   position: relative;
-  margin: 0 10px;
+  margin: 10px;
   border: solid 6px #cccccc;
   transition: 0.3s all;
 }
@@ -118,7 +118,9 @@
   padding-bottom: 80px;
 }
 .select-kana {
+  margin: 0 auto;
   padding-bottom: 80px;
+  width: 1200px;
 }
 #post-karuta {
   width: 900px;
